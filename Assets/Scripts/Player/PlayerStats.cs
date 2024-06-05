@@ -168,7 +168,7 @@ public class PlayerStats : MonoBehaviour
     [Header("UI")]
     public Image healthBar;
     public Image expBar;
-    public Text levelText;
+    public TMPro.TMP_Text levelText;
 
 
     public void TakeDamage(float dmg) 
