@@ -2439,9 +2439,10 @@ MonoBehaviour:
   chosenCharacterName: {fileID: 995510385}
   levelReachedDisplay: {fileID: 456693772}
   timeSurvivedDisplay: {fileID: 1229561488}
-  timeLimit: 300
+  timeLimit: 10
   stopwatchDisplay: {fileID: 1599552712}
   isGameOver: 0
+  playerObject: {fileID: 170260482}
 --- !u!4 &919651937
 Transform:
   m_ObjectHideFlags: 0
