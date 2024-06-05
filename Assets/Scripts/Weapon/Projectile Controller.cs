@@ -4,6 +4,13 @@ using UnityEngine;
 
 public class KnifeController : WeaponController
 {
+    AudioManager audioManager;
+
+    private void Awake() 
+    {
+        audioManager = GameObject.FindGameObjectWithTag("Audio").GetComponent<AudioManager>();
+    }
+
     protected override void Start()
     {
         base.Start();
@@ -18,5 +25,7 @@ public class KnifeController : WeaponController
         Vector3 targetPosition = GetMouseWorldPosition();
         Vector3 direction = (targetPosition - transform.position).normalized;
         spawnedKnife.GetComponent<KnifeBehaviour>().SetDirection(direction);   //Reference and set the direction
+
+        audioManager.PlaySFX(audioManager.projectile);
     }
 }
