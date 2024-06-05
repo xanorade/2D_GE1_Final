@@ -25,14 +25,14 @@ public class EnemyStats : MonoBehaviour
         currentDamage = enemyData.Damage;
     }
 
-    void Start() 
-    { 
-    player = FindObjectOfType<PlayerStats>().transform;
+    void Start()
+    {
+        player = FindObjectOfType<PlayerStats>().transform;
     }
 
-    void Update() 
+    void Update()
     {
-        if (Vector2.Distance(transform.position, player.position) >= despawnDistance) 
+        if (Vector2.Distance(transform.position, player.position) >= despawnDistance)
         {
             ReturnEnemy();
         }
@@ -54,22 +54,22 @@ public class EnemyStats : MonoBehaviour
         Destroy(gameObject);
     }
 
-    private void OnCollisionStay2D(Collision2D col) 
+    private void OnCollisionStay2D(Collision2D col)
     {
-        if (col.gameObject.CompareTag("Player")) 
+        if (col.gameObject.CompareTag("Player"))
         {
             PlayerStats player = col.gameObject.GetComponent<PlayerStats>();
             player.TakeDamage(currentDamage);
         }
     }
 
-    private void OnDestoy() 
+    private void OnDestoy()
     {
         EnemySpawner es = FindObjectOfType<EnemySpawner>();
         es.OnEnemyKilled();
     }
 
-    void ReturnEnemy() 
+    void ReturnEnemy()
     {
         EnemySpawner es = FindObjectOfType<EnemySpawner>();
         transform.position = player.position + es.relativeSpawnPoints[Random.Range(0, es.relativeSpawnPoints.Count)].position;

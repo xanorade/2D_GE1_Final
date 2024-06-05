@@ -9,11 +9,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c6aed27d0d043044ebdcdf8e88649ea0, type: 3}
-  m_Name: Projectile Weapon
+  m_Script: {fileID: 11500000, guid: a77c75c0f474e1e41b6928b5bc45d59f, type: 3}
+  m_Name: Enemy 3
   m_EditorClassIdentifier: 
-  prefab: {fileID: 5776079969099965640, guid: 649b22b0926cfa14fa553ef6de8b152b, type: 3}
-  damage: 10
-  speed: 5
-  cooldownDuration: 2
-  pierce: 1
+  moveSpeed: 4
+  maxHealth: 50
+  damage: 50

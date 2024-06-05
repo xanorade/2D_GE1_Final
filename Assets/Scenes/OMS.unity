@@ -563,7 +563,7 @@ MonoBehaviour:
   level: 1
   experienceCap: 100
   experienceCapIncrease: 100
-  invincibilityDuration: 0.5
+  invincibilityDuration: 1
   healthBar: {fileID: 1455245899}
   expBar: {fileID: 2035468509}
   levelText: {fileID: 219366899}
@@ -1157,7 +1157,7 @@ GameObject:
   m_Layer: 0
   m_Name: EnemySpawner
   m_TagString: Untagged
-  m_Icon: {fileID: 0}
+  m_Icon: {fileID: 5721338939258241955, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
@@ -1185,18 +1185,73 @@ MonoBehaviour:
     spawnCount: 0
   - waveName: Wawe 2
     enemyGroups:
+    - enemyName: Enemy
+      enemyCount: 7
+      spawnCount: 0
+      enemyPrefab: {fileID: 6840521189545643981, guid: a52c85f1db1e90f49982e43ef6cd7873, type: 3}
     - enemyName: Enemy 2
-      enemyCount: 2
+      enemyCount: 3
       spawnCount: 0
       enemyPrefab: {fileID: 6840521189545643981, guid: cd624290157d17c4ea432502f1970e74, type: 3}
+    waveQuota: 0
+    spawnInterval: 3
+    spawnCount: 0
+  - waveName: Wawe 3
+    enemyGroups:
+    - enemyName: Enemy
+      enemyCount: 10
+      spawnCount: 0
+      enemyPrefab: {fileID: 6840521189545643981, guid: a52c85f1db1e90f49982e43ef6cd7873, type: 3}
+    - enemyName: Enemy 2
+      enemyCount: 5
+      spawnCount: 0
+      enemyPrefab: {fileID: 6840521189545643981, guid: cd624290157d17c4ea432502f1970e74, type: 3}
+    - enemyName: Enemy 3
+      enemyCount: 1
+      spawnCount: 0
+      enemyPrefab: {fileID: 6840521189545643981, guid: 36c5c9a0b63e02a48b50eb4b58dc4176, type: 3}
+    waveQuota: 0
+    spawnInterval: 1
+    spawnCount: 0
+  - waveName: Wawe 4
+    enemyGroups:
+    - enemyName: Enemy
+      enemyCount: 5
+      spawnCount: 0
+      enemyPrefab: {fileID: 6840521189545643981, guid: a52c85f1db1e90f49982e43ef6cd7873, type: 3}
+    - enemyName: Enemy 2
+      enemyCount: 5
+      spawnCount: 0
+      enemyPrefab: {fileID: 6840521189545643981, guid: cd624290157d17c4ea432502f1970e74, type: 3}
+    - enemyName: Enemy 3
+      enemyCount: 5
+      spawnCount: 0
+      enemyPrefab: {fileID: 6840521189545643981, guid: 36c5c9a0b63e02a48b50eb4b58dc4176, type: 3}
+    waveQuota: 0
+    spawnInterval: 1
+    spawnCount: 0
+  - waveName: Wawe 4
+    enemyGroups:
+    - enemyName: Enemy
+      enemyCount: 7
+      spawnCount: 0
+      enemyPrefab: {fileID: 6840521189545643981, guid: a52c85f1db1e90f49982e43ef6cd7873, type: 3}
+    - enemyName: Enemy 2
+      enemyCount: 5
+      spawnCount: 0
+      enemyPrefab: {fileID: 6840521189545643981, guid: cd624290157d17c4ea432502f1970e74, type: 3}
+    - enemyName: Enemy 3
+      enemyCount: 3
+      spawnCount: 0
+      enemyPrefab: {fileID: 6840521189545643981, guid: 36c5c9a0b63e02a48b50eb4b58dc4176, type: 3}
     waveQuota: 0
     spawnInterval: 1
     spawnCount: 0
   currentWaveCount: 0
   enemiesAlive: 0
-  maxEnemiesAllowed: 3
+  maxEnemiesAllowed: 10
   maxEnemiesReached: 0
-  waveInterval: 5
+  waveInterval: 10
   relativeSpawnPoints:
   - {fileID: 189998586}
   - {fileID: 468625075}
@@ -2420,7 +2475,7 @@ CircleCollider2D:
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: -0.05}
   serializedVersion: 2
-  m_Radius: 0.5
+  m_Radius: 1
 --- !u!114 &781617652
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2433,7 +2488,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 26d87f86dc4a6034197c4998f833606f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pullSpeed: 300
+  pullSpeed: 250
 --- !u!1 &797026273
 GameObject:
   m_ObjectHideFlags: 0
@@ -2660,7 +2715,7 @@ MonoBehaviour:
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
-          m_StringArgument: My2DFinal
+          m_StringArgument: OMS
           m_BoolArgument: 0
         m_CallState: 2
 --- !u!114 &804996174
@@ -2989,7 +3044,7 @@ MonoBehaviour:
   chosenCharacterName: {fileID: 995510387}
   levelReachedDisplay: {fileID: 456693774}
   timeSurvivedDisplay: {fileID: 1229561490}
-  timeLimit: 10
+  timeLimit: 60
   stopwatchDisplay: {fileID: 1599552715}
   isGameOver: 0
   playerObject: {fileID: 170260482}
@@ -3664,7 +3719,9 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Quit
+  m_text: 'Back
+
+'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -4000,7 +4057,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Quit
+  m_text: Back
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -4082,7 +4139,7 @@ GameObject:
   - component: {fileID: 1386694252}
   - component: {fileID: 1386694251}
   m_Layer: 5
-  m_Name: Quit
+  m_Name: Back
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4161,7 +4218,7 @@ MonoBehaviour:
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
-          m_StringArgument: My2DFinal
+          m_StringArgument: Title Screen
           m_BoolArgument: 0
         m_CallState: 2
 --- !u!114 &1386694252
@@ -4411,7 +4468,7 @@ MonoBehaviour:
   terrainMask:
     serializedVersion: 2
     m_Bits: 64
-  currentChunk: {fileID: 0}
+  currentChunk: {fileID: 8508579533478429655, guid: 394b7c9620c4fa649a84d45c30ae70dd, type: 3}
   spawnedChunks:
   - {fileID: 1816436855}
   maxOpDist: 60
@@ -4824,7 +4881,7 @@ GameObject:
   - component: {fileID: 1815560850}
   - component: {fileID: 1815560849}
   m_Layer: 5
-  m_Name: Quit
+  m_Name: Back
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4903,7 +4960,7 @@ MonoBehaviour:
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
-          m_StringArgument: My2DFinal
+          m_StringArgument: Title Screen
           m_BoolArgument: 0
         m_CallState: 2
 --- !u!114 &1815560850
@@ -4949,75 +5006,6 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 8508579533478429655, guid: 394b7c9620c4fa649a84d45c30ae70dd, type: 3}
   m_PrefabInstance: {fileID: 6172846551761139610}
   m_PrefabAsset: {fileID: 0}
---- !u!1001 &1901009829
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    serializedVersion: 3
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 5516121396581191854, guid: a52c85f1db1e90f49982e43ef6cd7873, type: 3}
-      propertyPath: drops.Array.data[0].dropRate
-      value: 100
-      objectReference: {fileID: 0}
-    - target: {fileID: 6272415070202446601, guid: a52c85f1db1e90f49982e43ef6cd7873, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: -4.14
-      objectReference: {fileID: 0}
-    - target: {fileID: 6272415070202446601, guid: a52c85f1db1e90f49982e43ef6cd7873, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: -1.77
-      objectReference: {fileID: 0}
-    - target: {fileID: 6272415070202446601, guid: a52c85f1db1e90f49982e43ef6cd7873, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6272415070202446601, guid: a52c85f1db1e90f49982e43ef6cd7873, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 6272415070202446601, guid: a52c85f1db1e90f49982e43ef6cd7873, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6272415070202446601, guid: a52c85f1db1e90f49982e43ef6cd7873, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6272415070202446601, guid: a52c85f1db1e90f49982e43ef6cd7873, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6272415070202446601, guid: a52c85f1db1e90f49982e43ef6cd7873, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6272415070202446601, guid: a52c85f1db1e90f49982e43ef6cd7873, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6272415070202446601, guid: a52c85f1db1e90f49982e43ef6cd7873, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6840521189545643981, guid: a52c85f1db1e90f49982e43ef6cd7873, type: 3}
-      propertyPath: m_Name
-      value: Enemy
-      objectReference: {fileID: 0}
-    - target: {fileID: 6840521189545643981, guid: a52c85f1db1e90f49982e43ef6cd7873, type: 3}
-      propertyPath: m_Layer
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6840521189545643981, guid: a52c85f1db1e90f49982e43ef6cd7873, type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-    m_RemovedGameObjects: []
-    m_AddedGameObjects: []
-    m_AddedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: a52c85f1db1e90f49982e43ef6cd7873, type: 3}
 --- !u!1 &1914484444
 GameObject:
   m_ObjectHideFlags: 0
@@ -5249,11 +5237,10 @@ SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:
   - {fileID: 519420032}
-  - {fileID: 170260486}
   - {fileID: 6172846551761139610}
+  - {fileID: 170260486}
   - {fileID: 1436509590}
-  - {fileID: 1901009829}
   - {fileID: 391369441}
   - {fileID: 1270466699}
-  - {fileID: 919651937}
   - {fileID: 1100973583}
+  - {fileID: 919651937}

@@ -14,10 +14,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   icon: {fileID: -1945055921, guid: f95ff573ef1546a4fa1a35f660f3ef32, type: 3}
   name: Projectile Character
-  startingWeapon: {fileID: 0}
-  maxHealth: 1000
-  recovery: 1
+  startingWeapon: {fileID: 5776079969099965640, guid: 649b22b0926cfa14fa553ef6de8b152b, type: 3}
+  maxHealth: 200
+  recovery: 10
   moveSpeed: 5
   might: 0
   projectileSpeed: 0
-  magnet: 1.25
+  magnet: 1.5
