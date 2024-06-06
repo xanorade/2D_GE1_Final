@@ -5,33 +5,32 @@ using UnityEngine;
 public class PropRandomizer : MonoBehaviour
 {
 
+    // list of spawn points where props will be instantiated
     public List<GameObject> propSpawnPoints;
+
+    // list of prop prefabs to choose from
     public List<GameObject> propPrefabs;
 
-    // Start is called before the first frame update
     void Start()
     {
+        // spawn props when the scene starts
         SpawnProps();
     }
 
-    // Update is called once per frame
-    void Update()
+    //(AI)
+    void SpawnProps()
     {
-        
- 
-    }
-
-
-    void SpawnProps() 
-    { 
-
+        // loop through each spawn point
         foreach (GameObject sp in propSpawnPoints)
         {
-
+            // select a random prop prefab from the list
             int rand = Random.Range(0, propPrefabs.Count);
-           GameObject prop = Instantiate(propPrefabs[rand], sp.transform.position, Quaternion.identity);
+
+            // instantiate the selected prop prefab at the spawn point's position
+            GameObject prop = Instantiate(propPrefabs[rand], sp.transform.position, Quaternion.identity);
+
+            // set the spawned prop as a child of the spawn point
             prop.transform.parent = sp.transform;
         }
-    
     }
 }

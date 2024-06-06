@@ -6,19 +6,21 @@ using TMPro;
 
 public class GameManager : MonoBehaviour
 {
+    // Singleton instance
     public static GameManager instance;
 
+    // Enum defining game states
     public enum GameState
-    { 
-    Gameplay,
-    Paused,
-    GameOver,
+    {
+        Gameplay,
+        Paused,
+        GameOver,
     }
 
-
-
+    // Current game state
     public GameState currentState;
 
+    // Previous game state
     public GameState previousState;
 
     [Header("Screens")]
@@ -42,32 +44,30 @@ public class GameManager : MonoBehaviour
     float stopwatchTime;
     public TMP_Text stopwatchDisplay;
 
-
     public bool isGameOver = false;
 
     public GameObject playerObject;
 
-    void Awake() 
+    void Awake()
     {
+        // Singleton pattern
         if (instance == null)
         {
             instance = this;
         }
-        else 
+        else
         {
-            Debug.LogWarning("EXTRA" + this + "DELETED");
+            Debug.LogWarning("EXTRA " + this + " DELETED");
             Destroy(gameObject);
         }
 
-
         DisableScreens();
     }
-    
 
     void Update()
     {
-        
-        switch (currentState) 
+        // Manage game state based on the current state
+        switch (currentState)
         {
             case GameState.Gameplay:
                 CheckForPauseAndResume();
@@ -77,13 +77,12 @@ public class GameManager : MonoBehaviour
                 CheckForPauseAndResume();
                 break;
             case GameState.GameOver:
-                if (!isGameOver) 
+                if (!isGameOver)
                 {
                     isGameOver = true;
                     Time.timeScale = 0f;
                     Debug.Log("GAME IS OVER");
                     DisplayResults();
-                        
                 }
                 break;
             default:
@@ -92,13 +91,14 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    public void ChangeState(GameState newState) 
+    // Change the current game state
+    public void ChangeState(GameState newState)
     {
         currentState = newState;
     }
 
-
-    public void PauseGame() 
+    // Pause the game
+    public void PauseGame()
     {
         if (currentState != GameState.Paused)
         {
@@ -107,26 +107,25 @@ public class GameManager : MonoBehaviour
             Time.timeScale = 0f;
             pauseScreen.SetActive(true);
             Debug.Log("Game is paused");
-        
         }
-
     }
 
+    // Resume the game
     public void ResumeGame()
     {
-        if (currentState == GameState.Paused) 
+        if (currentState == GameState.Paused)
         {
-            ChangeState(previousState); 
+            ChangeState(previousState);
             Time.timeScale = 1f;
             pauseScreen.SetActive(false);
             Debug.Log("Game is resumed");
-
         }
     }
 
-    void CheckForPauseAndResume() 
+    // Check for pause and resume inputs
+    void CheckForPauseAndResume()
     {
-        if (Input.GetKeyDown(KeyCode.Escape)) 
+        if (Input.GetKeyDown(KeyCode.Escape))
         {
             if (currentState == GameState.Paused)
             {
@@ -139,35 +138,41 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    void DisableScreens() 
+    // Disable pause and result screens at the start
+    void DisableScreens()
     {
         pauseScreen.SetActive(false);
         resultsScreen.SetActive(false);
     }
 
-    public void GameOver() 
+    // Trigger game over state
+    public void GameOver()
     {
         timeSurvivedDisplay.text = stopwatchDisplay.text;
         ChangeState(GameState.GameOver);
     }
 
-    void DisplayResults() 
+    // Display game results
+    void DisplayResults()
     {
         resultsScreen.SetActive(true);
     }
 
-    public void AssignChosenCharacterUI(CharacterScriptableObject chosenCharacterData) 
+    // Assign chosen character UI data
+    public void AssignChosenCharacterUI(CharacterScriptableObject chosenCharacterData)
     {
         chosenCharacterImage.sprite = chosenCharacterData.Icon;
         chosenCharacterName.text = chosenCharacterData.name;
     }
 
-    public void AssignLevelReachedUI(int levelReachedData) 
-    { 
-    levelReachedDisplay.text = levelReachedData.ToString();
+    // Assign level reached UI data
+    public void AssignLevelReachedUI(int levelReachedData)
+    {
+        levelReachedDisplay.text = levelReachedData.ToString();
     }
 
-    void UpdateStopwatch() 
+    // Update the stopwatch
+    void UpdateStopwatch()
     {
         stopwatchTime += Time.deltaTime;
 
@@ -177,15 +182,14 @@ public class GameManager : MonoBehaviour
         {
             playerObject.SendMessage("Kill");
         }
-
     }
 
-    void UpdateStopwatchDisplay() 
+    // Update the stopwatch display
+    void UpdateStopwatchDisplay()
     {
-        int minutes = Mathf.FloorToInt(stopwatchTime/60);
+        int minutes = Mathf.FloorToInt(stopwatchTime / 60);
         int seconds = Mathf.FloorToInt(stopwatchTime % 60);
 
         stopwatchDisplay.text = string.Format("{0:00}:{1:00}", minutes, seconds);
     }
-
 }

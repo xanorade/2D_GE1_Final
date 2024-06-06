@@ -7,6 +7,9 @@ public class PlayerStats : MonoBehaviour
 {
     public CharacterScriptableObject characterData;
 
+    AudioManager audioManager;
+
+    // current player stats
     float currentHealth;
     float currentRecovery;
     float currentMoveSpeed;
@@ -16,6 +19,7 @@ public class PlayerStats : MonoBehaviour
 
     #region Current Stats Properties
 
+    // property for current health, updates the UI when health changes
     public float CurrentHealth
     {
         get { return currentHealth; }
@@ -24,7 +28,7 @@ public class PlayerStats : MonoBehaviour
             if (currentHealth != value)
             {
                 currentHealth = value;
-                if (GameManager.instance != null) 
+                if (GameManager.instance != null)
                 {
                     GameManager.instance.currentHealthDisplay.text = "Health: " + currentHealth;
                 }
@@ -32,6 +36,7 @@ public class PlayerStats : MonoBehaviour
         }
     }
 
+    // property for current recovery rate (not used in game but would used in future updates maybe)
     public float CurrentRecovery
     {
         get { return currentRecovery; }
@@ -44,6 +49,7 @@ public class PlayerStats : MonoBehaviour
         }
     }
 
+    // property for current move speed
     public float CurrentMoveSpeed
     {
         get { return currentMoveSpeed; }
@@ -55,6 +61,8 @@ public class PlayerStats : MonoBehaviour
             }
         }
     }
+
+    // property for current might (not used too)
     public float CurrentMight
     {
         get { return currentMight; }
@@ -67,6 +75,7 @@ public class PlayerStats : MonoBehaviour
         }
     }
 
+    // property for current projectile speed (not used too)
     public float CurrentProjectileSpeed
     {
         get { return currentProjectileSpeed; }
@@ -79,6 +88,7 @@ public class PlayerStats : MonoBehaviour
         }
     }
 
+    // property for current magnet (pickup radius)
     public float CurrentMagnet
     {
         get { return currentMagnet; }
@@ -92,61 +102,72 @@ public class PlayerStats : MonoBehaviour
     }
     #endregion
 
-
     [Header("Experience/Level")]
     public int experience = 0;
     public int level = 1;
     public int experienceCap = 100;
     public int experienceCapIncrease;
 
+    PlayerCollector collector;
+
     void Awake()
     {
+        // initializing the player's current stats from the character data
         CurrentHealth = characterData.MaxHealth;
         CurrentRecovery = characterData.Recovery;
         CurrentMoveSpeed = characterData.MoveSpeed;
         CurrentMight = characterData.Might;
         CurrentProjectileSpeed = characterData.ProjectileSpeed;
         CurrentMagnet = characterData.Magnet;
-    }
-    void Start() 
-    {
-        GameManager.instance.AssignChosenCharacterUI(characterData);
 
+        // get the PlayerCollector component and set its radius
+        collector = GetComponentInChildren<PlayerCollector>();
+        collector.SetRadius(characterData.Magnet);
+
+        audioManager = GameObject.FindGameObjectWithTag("Audio").GetComponent<AudioManager>();
+    }
+
+    void Start()
+    {
+        // assigning the character's UI and update initial values
+        GameManager.instance.AssignChosenCharacterUI(characterData);
         UpdateHealthBar();
         UpdateExpBar();
-        UpdateLevelText(); 
+        UpdateLevelText();
     }
 
-    void Update() 
+    void Update()
     {
-        if (invincibilityTimer > 0) 
+        // managing invincibility timer (or your health bar melts immediately)
+        if (invincibilityTimer > 0)
         {
             invincibilityTimer -= Time.deltaTime;
         }
-        else if (isInvincible) 
+        else if (isInvincible)
         {
             isInvincible = false;
         }
+        
         Recover();
     }
 
+    // increasing experience and checking for level up
     public void IncreaseExperience(int amount)
     {
         experience += amount;
-
         LevelUpChecker();
-
         UpdateExpBar();
     }
 
-    void LevelUpChecker() 
+    // checks if the player has enough experience to level up
+    void LevelUpChecker()
     {
         if (experience >= experienceCap)
         {
-
             level++;
             experience -= experienceCap;
             experienceCap += experienceCapIncrease;
+
             if (GameManager.instance != null)
             {
                 GameManager.instance.currentLevel.text = "Current Level: " + level;
@@ -157,6 +178,7 @@ public class PlayerStats : MonoBehaviour
             }
 
             UpdateLevelText();
+            ProjectileWeaponBehaviour.IncreasePierce(1); // increase the pierce value of projectiles
         }
     }
 
@@ -170,63 +192,67 @@ public class PlayerStats : MonoBehaviour
     public Image expBar;
     public TMPro.TMP_Text levelText;
 
-
-    public void TakeDamage(float dmg) 
+    // taking damage and updating health
+    public void TakeDamage(float dmg)
     {
-        if (!isInvincible) 
+        if (!isInvincible)
         {
-
             invincibilityTimer = invincibilityDuration;
             isInvincible = true;
-
             CurrentHealth -= dmg;
+
             if (CurrentHealth <= 0)
             {
+                audioManager.PlaySFX(audioManager.death);
                 Kill();
+            }
+            audioManager.PlaySFX(audioManager.damageTaken);
+            UpdateHealthBar();
+        }
+    }
+
+    // experience bar fill amount updater
+    void UpdateExpBar()
+    {
+        expBar.fillAmount = (float)experience / experienceCap;
+    }
+
+    // level text updater
+    void UpdateLevelText()
+    {
+        levelText.text = "LV " + level.ToString();
+    }
+
+    // health bar fill amount updater
+    void UpdateHealthBar()
+    {
+        healthBar.fillAmount = currentHealth / characterData.MaxHealth;
+    }
+
+    // recover health over time
+    void Recover()
+    {
+        if (CurrentHealth < characterData.MaxHealth)
+        {
+            CurrentHealth += CurrentRecovery * Time.deltaTime;
+
+            if (CurrentHealth > characterData.MaxHealth)
+            {
+                CurrentHealth = characterData.MaxHealth;
             }
 
             UpdateHealthBar();
         }
     }
 
-    void UpdateExpBar() 
+    // gameover checker
+    public void Kill()
     {
-        expBar.fillAmount = (float)experience / experienceCap;
-    }
-
-    void UpdateLevelText() 
-    {
-        levelText.text = "LV " + level.ToString();
-    }
-
-
-    void UpdateHealthBar() 
-    {
-        healthBar.fillAmount = currentHealth / characterData.MaxHealth;
-    }
-
-    void Recover() 
-    {
-        if (CurrentHealth < characterData.MaxHealth) 
+        if (!GameManager.instance.isGameOver)
         {
-            CurrentHealth += CurrentRecovery * Time.deltaTime;
 
-            if (CurrentHealth > characterData.MaxHealth) 
-            { 
-            CurrentHealth = characterData.MaxHealth;
-            }
-        }
-    }
-
-    public void Kill() 
-    {
-        if (!GameManager.instance.isGameOver) 
-        {
             GameManager.instance.AssignLevelReachedUI(level);
             GameManager.instance.GameOver();
         }
     }
-
-
-
 }

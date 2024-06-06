@@ -4,14 +4,16 @@ using UnityEngine;
 
 public class CameraMovement : MonoBehaviour
 {
-
+    // the target object the camera will follow
     public Transform target;
-    public Vector3 offset;
-   
 
-    // Update is called once per frame
+    // the offset between the camera and the target
+    public Vector3 offset;
+
+    // update is called once per frame
     void Update()
     {
+        // move the camera to the target position plus the offset
         transform.position = target.position + offset;
     }
 }

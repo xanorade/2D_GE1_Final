@@ -5,9 +5,12 @@ using UnityEngine.SceneManagement;
 
 public class SceneController : MonoBehaviour
 {
-    public void SceneChange(string name) 
+    // method for changing scenes
+    public void SceneChange(string name)
     {
+        // load the scene with name.
         SceneManager.LoadScene(name);
+        // reseting time scale after scene to avoid bugs with replaying
         Time.timeScale = 1;
     }
 }

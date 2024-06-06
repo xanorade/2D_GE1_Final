@@ -6,16 +6,18 @@ public class KnifeBehaviour : ProjectileWeaponBehaviour
 {
     protected override void Start()
     {
-        base.Start();
+        base.Start(); // calls the Start method of the base class 
     }
 
     void Update()
     {
-        transform.position += direction * currentSpeed * Time.deltaTime;    //Set the movement of the knife
+        // sets the movement of the knife based on direction, speed, and time
+        transform.position += direction * currentSpeed * Time.deltaTime;
     }
 
+    // method to set the direction of the knife
     public void SetDirection(Vector3 dir)
     {
-        direction = dir;
+        direction = dir; // Set the direction to the provided vector
     }
 }

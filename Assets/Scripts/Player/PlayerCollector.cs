@@ -2,34 +2,41 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[RequireComponent(typeof(CircleCollider2D))] // requires a CircleCollider2D component to be attached to the GameObject
 public class PlayerCollector : MonoBehaviour
 {
+    // reference to the PlayerStats script
     PlayerStats player;
-    CircleCollider2D playerCollector;
+
+    // reference to the CircleCollider2D component
+    CircleCollider2D detector;
+
+    // speed at which the player collects pickups
     public float pullSpeed;
 
-    void Start() 
+    void Start()
     {
-        player = FindObjectOfType<PlayerStats>();
-        playerCollector = GetComponent<CircleCollider2D>();
+        // gets the PlayerStats component from the parent GameObject
+        player = GetComponentInParent<PlayerStats>();
     }
 
-    void Update() 
+    // sets the radius of the collector
+    public void SetRadius(float r)
     {
-        playerCollector.radius = player.CurrentMagnet;
+        // gets or adds the CircleCollider2D component
+        if (!detector) detector = GetComponent<CircleCollider2D>();
+        detector.radius = r;
     }
 
-
-    void OnTriggerEnter2D(Collider2D col) 
+    // when something enters the trigger collider
+    void OnTriggerEnter2D(Collider2D col)
     {
-        if (col.gameObject.TryGetComponent(out ICollectible collectible)) 
+        // checks if the collided object has a Pickup component
+        if (col.TryGetComponent(out Pickup p))
         {
-            Rigidbody2D rb = col.gameObject.GetComponent<Rigidbody2D>();
-            Vector2 forceDirection = (transform.position - col.transform.position).normalized;
-            rb.AddForce(forceDirection * pullSpeed);
-
-
-        collectible.Collect();
+            // collects the pickup by calling the Collect method of the Pickup component
+            // passes the player reference and pull speed as parameters
+            p.Collect(player, pullSpeed);
         }
     }
 }
